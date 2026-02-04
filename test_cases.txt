@@ -1,0 +1,165 @@
+qwen3-vl:235b-instruct-cloud
+Based on the following Figma design data, create a comprehensive BDD (Behavior Driven Development) test plan.
+...
+... Analyze the UI elements and generate scenarios for:
+... 1. Layout and Visual Elements:
+...    - Presence and visibility of components
+...    - Layout structure and hierarchy
+...    - Responsive design behavior
+...
+... 2. User Interactions:
+...    - Click events and navigation
+...    - Error states and messages
+...
+... 3. Business Logic:
+...    - User flows and journeys
+...    - Data display and updates
+...    - State management
+...
+... Design Data:
+... understand from E:\O_Projects\docs_to_tests_ai_vlm\input\FLASH.jpeg Transparent red dot indicates user action and th
+... e arrow shows the action of the tap/drag/swipe, English + Korean text Legend explaining behaviors, If present Decisi
+... on diamonds (conditional branching)
+...
+... Please format the response in Gherkin syntax with:
+... - Feature: [Feature name]
+... - Scenario: [Scenario description]
+...   Given [initial context]
+...   When [action occurs]
+...   Then [expected outcome]
+Added image 'E:\O_Projects\docs_to_tests_ai_vlm\input\FLASH.jpeg'
+Feature: Camera Flash Mode Toggle and Battery Warning Behavior
+
+  Scenario: User toggles flash mode and sees visual feedback
+    Given the camera app is open in Photo mode
+    When the user taps the flash icon (red dot indicator) on the control bar
+    Then the flash mode should cycle to the next state (Off → Auto → On → Off...)
+    And the flash icon should visually update to reflect the current mode (e.g., icon color or symbol change)
+    And the UI should remain stable without layout shifts
+
+  Scenario: User selects Flash Auto and device is in low-light condition
+    Given the camera app is open and the current flash mode is Auto
+    And the ambient light sensor detects dim lighting (simulated condition)
+    When the user taps the shutter button to capture a photo
+    Then the flash should automatically fire
+    And the flash icon should display a yellow highlight (as per design legend) to indicate Auto activation
+
+  Scenario: User selects Flash Off in dim lighting and sees warning message
+    Given the camera app is open and the current flash mode is Off
+    And the ambient light sensor detects dim lighting
+    When the user taps the flash icon to toggle mode
+    Then the flash mode should remain Off
+    And a warning message “Flash Off & Dim condition” should appear in the top status bar
+    And the message should be displayed in both English and Korean as per design legend
+
+  Scenario: Battery is low and user attempts to use Flash On
+    Given the device battery level is below 15%
+    And the user has selected Flash On mode
+    When the user taps the shutter button to take a photo
+    Then a warning message “Battery too low to use Flash” should appear in the top status bar
+    And the flash should not fire
+    And the flash mode should automatically revert to Flash Auto or Flash Off (as per business logic in design
+note #3)
+
+  Scenario: User cycles through flash modes and returns to initial state
+    Given the camera app is open and flash mode is initially Off
+    When the user taps the flash icon three times consecutively
+    Then the flash mode should return to Off
+    And the UI should reflect the Off state consistently across all visual indicators
+
+  Scenario: Flash mode persists after app backgrounding and foregrounding
+    Given the user has set flash mode to Auto
+    When the user backgrounds the app and then returns to it
+    Then the flash mode should remain set to Auto
+    And no visual or functional regression should occur
+
+  Scenario: Responsive layout maintains control bar integrity on screen rotation
+    Given the camera app is open in portrait mode with Flash On selected
+    When the user rotates the device to landscape mode
+    Then the control bar (including flash icon, shutter, mode selector) should reposition correctly without
+overlap or truncation
+    And the flash icon should remain tappable and visually consistent with portrait layout
+
+  Scenario: Decision diamond logic for Flash Auto behavior
+    Given the camera app is in Flash Auto mode
+    And the user is in a well-lit environment
+    When the user taps the shutter button
+    Then the flash should not fire
+    And no warning message should appear
+    But if the user enters a dim environment and taps the shutter
+    Then the flash should fire and a yellow highlight should appear on the flash icon
+
+  Scenario: User sees multilingual warning messages based on system language
+    Given the system language is set to Korean
+    And the user triggers a battery low warning while using Flash On
+    When the warning message appears
+    Then it should display “배터리가 부족하여 플래시를 사용할 수 없습니다” (Korean translation)
+    And if the system language is English, it should display “Battery too low to use Flash”
+
+  Scenario: Visual hierarchy preserves flash icon prominence during state changes
+    Given the user is in any camera mode (Portrait, Photo, Video, More)
+    When the user toggles flash mode
+    Then the flash icon should remain visually prominent in the control bar
+    And its position should not shift relative to other controls (shutter, mode selector, settings)
+    And all icons should maintain consistent spacing and alignment
+
+  Scenario: User navigates through flash modes with accessibility enabled
+    Given accessibility features (e.g., screen reader) are active
+    When the user taps the flash icon
+    Then the screen reader should announce the current flash mode (e.g., “Flash Off”, “Flash Auto”, “Flash On”)
+    And the visual state change should be synchronized with the audio feedback
+
+  Scenario: Flash mode selection persists across camera mode switches
+    Given the user has set flash mode to On in Photo mode
+    When the user switches to Video mode
+    Then the flash mode should remain On (if supported in Video mode)
+    Or revert to a default compatible mode (e.g., Auto) with a subtle UI indicator if On is not supported
+    And the user should be able to toggle back to Photo mode and retain the last selected flash mode
+
+  Scenario: Error state recovery after battery warning
+    Given the user saw “Battery too low to use Flash” warning
+    And the user charges the device to above 15%
+    When the user reopens the camera app and selects Flash On
+    Then the flash should function normally
+    And the warning message should no longer appear
+    And the flash icon should reflect active On state without visual degradation
+
+
+=======================================================
+
+
+
+Based on the following Figma design data, create a comprehensive BDD (Behavior Driven Development) test plan.
+
+Analyze the UI elements and generate scenarios for:
+1. Layout and Visual Elements:
+   - Presence and visibility of components
+   - Layout structure and hierarchy
+   - Responsive design behavior
+
+2. User Interactions:
+   - Click events and navigation
+   - Error states and messages
+
+3. Business Logic:
+   - User flows and journeys
+   - Data display and updates
+   - State management
+
+Design Data:
+understand from <filepath> Transparent red dot indicates user action and the arrow shows the action of the tap/drag/swipe, English + Korean text Legend explaining behaviors, If present Decision diamonds (conditional branching)
+
+Please format the response in Gherkin syntax with:
+- Feature: [Feature name]
+- Scenario: [Scenario description]
+  Given [initial context]
+  When [action occurs]
+  Then [expected outcome]
+
+
+
+=================================================================================================
+
+
+
+
